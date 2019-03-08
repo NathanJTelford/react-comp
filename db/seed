@@ -1,0 +1,5 @@
+-- create table toDoer(id serial PRIMARY KEY,  name varchar(30), age INTEGER, pass varchar(10) )
+create table list(id serial PRIMARY KEY, name VARCHAR(30), user_id INTEGER REFERENCES toDoer(id))
+create table list_item (id serial primary key, item varchar(30), done BOOLEAN, budget NUMERIC, user_id INTEGER REFERENCES list(id) )
+
+

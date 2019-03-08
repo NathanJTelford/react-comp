@@ -1,0 +1,1 @@
+delete FROM toDoer where id = ${id}
