@@ -15,17 +15,17 @@ export function getList(list) {
     }
 }
 
-export function getName(age) {
-    return {
-        type: GET_AGE,
-        payload: age
-    }
-}
-
-export function getAge(name) {
+export function getName(name) {
     return {
         type: GET_NAME,
         payload: name
+    }
+}
+
+export function getAge(age) {
+    return {
+        type: GET_AGE,
+        payload: age
     }
 }
 

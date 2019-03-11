@@ -16,7 +16,7 @@ export default class Profile extends React.Component{
     }
 
    async componentDidMount(){
-        this.setState({user:this.props.name})
+       await this.setState({user:this.props.age})
         
     }
 
@@ -31,7 +31,7 @@ export default class Profile extends React.Component{
     }
 
     handelQuery(){
-        axios.get(`/get/data/search?query=${this.state.query}`).then(res=>{
+        axios.get(`/get/data/query?q=${this.state.query}`).then(res=>{
             this.setState({data:res.data})
         })
     }
@@ -54,7 +54,7 @@ export default class Profile extends React.Component{
 
                 <hr/>
                 <h2>personal info</h2>
-                <input placeholder='age/name/password' onchange={(e)=>this.setState({query:e.target.value})}/>
+                <input placeholder='age/name/password' onChange={(e)=>this.setState({query:e.target.value})}/>
                 <button onClick={()=>this.handelQuery()}>Find info</button>
                 {this.state.data}
 

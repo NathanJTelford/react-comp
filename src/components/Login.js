@@ -14,6 +14,7 @@ class Login extends React.Component {
         }
     }
 
+
     handleLogin = () => {
         this.props.getName(this.state.name)
         axios.get(`/auth/login/${this.state.name}/${this.state.pass}`).then(res=>{
