@@ -14,7 +14,7 @@ class App extends Component {
           <Route exact path='/' component={Login}/>
           <Route path='/profile' component={Profile}/>
           <Route path='/list' component={List}/>
-          <Route path='/Todo/:id' component={Todo}/>
+          <Route path='/todo/:id' component={Todo}/>
         </Switch>
       </div>
     );

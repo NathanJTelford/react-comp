@@ -28,17 +28,18 @@ massive(CONNECTION_STRING).then(dbInstance => {
 })
 
 
-app.post(`/add/list/:task/:name`, async (req, res) => {
+app.post(`/add/list/:name`, async (req, res) => {
     const db = req.app.get('db');
     const { id } = req.session.user
-    const { name, task } = req.params
-    console.log(task)
+    const { name } = req.params
+    console.log(req.body, typeof req.body);
+
     const response = await db.make_list({ name: name, id: id })
-    req.session.list = { id: response[0].id, name: response[0].name }
-    await task.forEach((el) => {
+    req.session.list = await { id: response[0].id, name: response[0].name }
+    await req.body.task.forEach((el) => {
         db.add_item({ name: el.name, bool: false, cost: el.cost, id: req.session.list.id })
     })
-    res.status(200).send(req.session.list)
+    res.status(200).send(response)
 })
 
 // requests level middleware
@@ -46,7 +47,7 @@ app.post(`/add/list/:task/:name`, async (req, res) => {
 async function uniqueApp (req,res,next){
     const db = req.app.get('db');
     let userArr = await db.check(req.body);
-    if(userArr[0] > 1){
+    if(userArr.length > 0){
     return res.redirect('/login')
     }
     
@@ -81,12 +82,28 @@ app.put(`/auth/edit/:newName`, async (req, res) => {
     res.status(201).send(response.data)
 })
 
-app.get('/get/data/query', async (req, res) => {
-    console.log(req.query,'hit')
-    const db = req.app.get('db');
-    const { id } = req.session;
-    const { q } =req.query
-    let response = await db.get_data({ id:id, q:q }).catch( error=>{console.log(error)})
+app.get('/lists', async (req,res)=>{
+    const db = app.get('db');
+    let response = await db.query('select * from list where user_id = 16').catch(error=>{console.log(error);
+    })
     res.status(200).send(response)
+})
+
+//query endpoint
+
+app.get('/get/data/query', async (req, res) => {
+    const db = req.app.get('db');
+    const { id } = req.session.user;
+    const { q } =req.query
+    let response = await db.query(`select ${q} from toDoer where id = ${id}`).catch( error=>{console.log(error)})
+    res.status(200).send(response)
+})
+
+// routing params
+app.get('/list/items/:id', async (req,res)=>{
+    const db = app.get('db');
+   const items = await  db.query(`select * from list_item where list_id = ${req.params.id}`).catch(error=>{console.log(error);
+   })
+   res.status(200).send(items)
 })
 
