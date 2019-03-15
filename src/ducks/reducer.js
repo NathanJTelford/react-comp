@@ -39,7 +39,7 @@ export default function (state = initialState, action) {
             }
         case GET_NAME:
             return {
-                ...state, getName: action.payload
+                ...state, name: action.payload
             }
         case GET_LIST:
             return {

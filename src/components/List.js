@@ -11,7 +11,8 @@ class List extends React.Component {
             text: '',
             num: 0,
             task: [],
-            lists: []
+            lists: [],
+            switch:true
 
         }
     }
@@ -27,11 +28,15 @@ class List extends React.Component {
 
     async componentDidUpdate(prevProps, prevState){
       let res = await axios.get('/lists')
-      if( prevState !== res.data[res.data.length -1]){
-          this.setState({lists:res.data})
+      if(  prevState.lists !== res.data ){
+         this.update(res.data)
       }
     }
 
+        update=(val)=>{this.setState({
+            lists:val,
+            switch:false
+        })}
 
 
 

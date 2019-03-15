@@ -1,2 +1,3 @@
 select ${q} from toDoer
-where ${q} = (select ${q} from toDoer where id = ${id})
+where 
+EXISTS (select ${q} from toDoer where id = ${id})

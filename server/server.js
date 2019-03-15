@@ -8,6 +8,9 @@ require('dotenv').config()
 const { CONNECTION_STRING, SERVER_PORT, SECRET } = process.env;
 
 const app = express();
+
+app.use((req,res,next)=>{console.log('WOW, SO MUCH AMAZE!'), next()})
+
 app.use(express.json());
 
 app.use(express.static(`${__dirname}/../build`));

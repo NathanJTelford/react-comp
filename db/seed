@@ -3,8 +3,12 @@
 -- create table list(id serial PRIMARY KEY, name VARCHAR(30), user_id INTEGER REFERENCES toDoer(id))
 -- create table toDoerAccount( id serial primary key, user_id INTEGER REFERENCES toDoer(id), numOfList INTEGER, email varchar(40))
 
-//example of many to many. pretend tables user, and products exist.
--- create table orders( id serial primary key, item_id INTEGER REFERENCES products(id), customer_id INTEGER REFERENCES user(id))
+// example of many to many... for real.
+
+create table student(student_id serial primary key, student_name varchar(50), semester integer )
+create table class(class_id serial primary key, type varchar(30), length integer)
+// join table between many to many relationship
+create table class_enrollment(enrollment_id serial primary key, enrollee_id integer REFERENCES student(student_id), class integer REFERENCES class(class_id))
 
 
 -- alter table toDoer ADD COLUMN email varchar(40)
